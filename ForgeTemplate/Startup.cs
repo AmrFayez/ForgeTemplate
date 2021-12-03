@@ -29,6 +29,7 @@ namespace ForgeTemplate
                                       .AllowAnyMethod();
                                   });
             });
+            services.AddScoped<ForgeAuthService>();
             services.AddRazorPages();
             services.AddControllersWithViews();
             services.AddSpaStaticFiles(options => options.RootPath = "client-app/dist");
