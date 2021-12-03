@@ -11,7 +11,8 @@ export default {
  data(){
      return {
        viewer: Autodesk.Viewing.GuiViewer3D,
-       options:null
+       options:null,
+       viewerDocument:any
      }
 
  },
@@ -31,27 +32,35 @@ Autodesk.Viewing.Initializer(this.options, function() {
 
     var htmlDiv = document.getElementById('forge-viewer');
     this.viewer = new Autodesk.Viewing.GuiViewer3D(htmlDiv);
-    debugger;
     var startedCode = this.viewer.start();
     if (startedCode > 0) {
         console.error('Failed to create a Viewer: WebGL not supported.');
         return;
     }
-var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHVwbWk4cGkwZGFoeHFwdXNhZTZ6aG9hMG1scjdtNmJfYmFyeS9BcmNoUHJvamVjdC5ydnQ';
-var self=this;
-Autodesk.Viewing.Document.load(documentId, this.onDocumentLoadSuccess.bind(this), this.onDocumentLoadFailure.bind(this));
+     var documentId='urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dHVwbWk4cGkwZGFoeHFwdXNhZTZ6aG9hMG1scjdtNmJfYmFyeS9BcmNoUHJvamVjdC5ydnQ';
+     this.loadDocument(documentId).bind(this);
+
     console.log('Initialization complete, loading a model next...');
 
 }.bind(this));
  },
  methods:{
      onDocumentLoadSuccess(viewerDocument) {
+    this.viewerDocument=viewerDocument;
     var defaultModel = viewerDocument.getRoot().getDefaultGeometry();
-    debugger;
     this.viewer.loadDocumentNode(viewerDocument, defaultModel);
 },onDocumentLoadFailure() {
     console.error('Failed fetching Forge manifest');
-}
+   
+},
+
+ loadDocument(documentId){
+
+    Autodesk.Viewing.Document.load(documentId, this.onDocumentLoadSuccess.bind(this), this.onDocumentLoadFailure.bind(this));
+    console.log('Initialization complete, loading a model next...');
+
+   } 
+
  },destroyed(){
      console.log("Dispose Viewer")
    this.viewer.finish();
