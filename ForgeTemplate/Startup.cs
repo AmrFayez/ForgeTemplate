@@ -32,7 +32,7 @@ namespace ForgeTemplate
             services.AddScoped<ForgeAuthService>();
             services.AddRazorPages();
             services.AddControllersWithViews();
-            services.AddSpaStaticFiles(options => options.RootPath = "client-app/dist");
+            services.AddSpaStaticFiles(options => options.RootPath = "app-client/dist");
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Forge Template", Version = "v1" });
@@ -77,7 +77,7 @@ namespace ForgeTemplate
             app.UseSpaStaticFiles();
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "client-app";
+                spa.Options.SourcePath = "app-client";
                 if (env.IsDevelopment())
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:8081");
