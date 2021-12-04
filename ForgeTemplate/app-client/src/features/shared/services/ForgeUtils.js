@@ -1,5 +1,5 @@
-export class ForgeUtils{
-   static getEncodedURN = function (urn) {
+export default  {
+    getEncodedURN(urn) {
     let encoded;
 
     if (urn.indexOf('adsk') != -1) {
@@ -14,4 +14,6 @@ export class ForgeUtils{
 
     return encoded;
 } 
+
+
 }
